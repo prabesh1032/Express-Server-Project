@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
+import errorHandler from "./middleware/errorhandlermiddleware";
 
 const app = express();
 
@@ -29,19 +30,6 @@ app.use((req: Request, res: Response) => {
 });
 
 //error handler middleware
-app.use((error: any, req: Request, res: Response, next: NextFunction) => {
-  const statusCode = error?.ststusCode ?? 500;
-  const message = error?.message ?? "Internal Server Error";
-  const status = error?.ststus ?? "error";
-  const success = false;
-
-  res.status(statusCode).json({
-    message,  
-    status,
-    success,
-    data: null,
-    stack: error?.stack ?? null,
-  });
-});
+app.use(errorHandler);
 
 export default app;
