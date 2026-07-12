@@ -1,7 +1,20 @@
 import express, { Request, Response } from "express";
+import mongoose from "mongoose";
 import errorHandler from "./middleware/errorhandlermiddleware";
 
 const app = express();
+
+//database
+const DB_URL = "mongodb://localhost:27017";
+
+mongoose.connect(DB_URL, {
+    dbName: "project",
+}).then(() => {
+    console.log("database connected");
+}).catch((error) => {
+    console.log("-------database connection error------");
+    console.log(error);
+});
 
 //middleware
 app.use(express.json());
@@ -10,8 +23,8 @@ app.use(express.json());
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
     message: "Server is up and running !!!!!!!!!!",
-    sucess: true,
-    status: "sucess",
+    success: true,
+    status: "success",
     data: null,
   });
 });
@@ -20,7 +33,7 @@ app.get("/", (req: Request, res: Response) => {
 
 //using path not found route
 app.use((req: Request, res: Response) => {
-  const message = "can not ${req.method} on ${req.path}";
+  const message = `cannot ${req.method} on ${req.path}`;
   res.status(404).json({
     message,
     status: "fail",
