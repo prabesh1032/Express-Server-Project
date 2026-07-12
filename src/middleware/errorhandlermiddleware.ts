@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 const errorhaldler = (error: any, req: Request, res: Response, next: NextFunction) => {
   const statusCode = error?.ststusCode ?? 500;
   const message = error?.message ?? "Internal Server Error";
-  const status = error?.ststus ?? "error";
+  const status = error?.status ?? "error";
   const success = false;
 
   res.status(statusCode).json({
