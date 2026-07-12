@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
+import { hashPassword } from "../utils/bcrypt.utils";
 
 //register
 export const register = async (req: Request, res: Response) => {
@@ -24,6 +25,9 @@ export const register = async (req: Request, res: Response) => {
       throw error;
     }
     const user = new User({ full_name, email });
+    const hash = await hashPassword(password);
+    user.password = hash;
+
     await user.save();
     const { password: user_pass, ...rest } = user.toObject();
     res.status(201).json({
