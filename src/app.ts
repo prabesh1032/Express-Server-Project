@@ -1,20 +1,7 @@
 import express, { Request, Response } from "express";
-import mongoose from "mongoose";
 import errorHandler from "./middleware/errorhandlermiddleware";
 
 const app = express();
-
-//database
-const DB_URL = "mongodb://localhost:27017";
-
-mongoose.connect(DB_URL, {
-    dbName: "project",
-}).then(() => {
-    console.log("database connected");
-}).catch((error) => {
-    console.log("-------database connection error------");
-    console.log(error);
-});
 
 //middleware
 app.use(express.json());
