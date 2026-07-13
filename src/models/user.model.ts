@@ -20,9 +20,9 @@ const UserSchema = new mongoose.Schema<IUser>(
   {
     user_name: {
       type: String,
-      required: [true, "full name is required"],
+      required: [true, "user name is required"],
       minlength: [3, "name must be 3 character long."],
-      trim: true,
+      trim:true,
     },
     full_name: {
       type: String,
@@ -48,7 +48,7 @@ const UserSchema = new mongoose.Schema<IUser>(
     },
     profile_image: {
       type: String,
-      defaults: null,
+      default: null,
     },
   },
   { timestamps: true },

@@ -19,17 +19,17 @@ app.get("/", (req: Request, res: Response) => {
 
 //using routes
 
+app.use("/api/v1/auth", authRouter);
+
+
 //using path not found route
 app.use((req: Request, res: Response) => {
   const message = `cannot ${req.method} on ${req.path}`;
-  res.status(404).json({
-    message,
-    status: "fail",
-    success: false,
-    data: null,
-  });
+  const error:any = new Error(message);
+  error.statusCode = 404;
+  error.status = "fail";
+  throw error;
 });
-app.use("/api/v1/auth", authRouter);
 
 //error handler middleware
 app.use(errorHandler);
