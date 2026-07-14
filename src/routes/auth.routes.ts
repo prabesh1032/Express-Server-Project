@@ -5,6 +5,6 @@ import { validator } from "../validators/middleware.validator";
 import { loginSchema } from "../validators/auth.validator";
 
 const router = express.Router();
-router.post("/register",validator(registerSchema), register);
-router.post("/login",validator(loginSchema), login);
+router.post("/register", validator(registerSchema), register);
+router.post("/login", validator(loginSchema), login);
 export default router;

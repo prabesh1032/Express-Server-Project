@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/user.model";
 import { hashPassword } from "../utils/bcrypt.utils";
-//import AppError from "../utils/apperror.utils";
+import AppError from "../utils/apperror.utils";
+import { comparePassword } from "../utils/bcrypt.utils";
+import { sendResponse } from "../utils/sendResponse.utils";
 
 //register
 export const register = async (
@@ -33,12 +35,18 @@ export const register = async (
     user.password = hash;
 
     await user.save();
-    const { password: user_pass, ...rest } = user.toObject();
-    res.status(201).json({
+    const { password: _, ...rest } = user.toObject();
+
+    sendResponse(res, {
       message: "account created",
-      status: "success",
       data: rest,
+      statusCode: 201,
     });
+    // res.status(201).json({
+    //   message: "account created",
+    //   status: "success",
+    //   data: rest,
+    // });
   } catch (error) {
     next(error);
   }
@@ -52,27 +60,27 @@ export const login = async (
 ) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-        status: "fail",
-      });
+      throw new AppError("Invalid Credential", 400);
     }
-    //compare password
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({
-        message: "Invalid credentials",
-        status: "fail",
-      });
+
+    const isPassMatched = await comparePassword(password, user.password);
+    if (!isPassMatched) {
+      throw new AppError("Invalid Credentials", 400);
     }
-    const { password: user_pass, ...rest } = user.toObject();
-    res.status(200).json({
-      message: "login successful",
-      status: "success",
+    //conver user doc to object
+    const { password: _, ...rest } = user.toObject();
+    sendResponse(res, {
+      message: "Login Sucessful",
       data: rest,
+      statusCode: 201,
     });
+    // res.status(200).json({
+    //   message: "login successful",
+    //   status: "success",
+    //   data: rest,
+    // });
   } catch (error) {
     next(error);
   }

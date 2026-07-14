@@ -8,3 +8,13 @@ export const hashPassword = async (password: string) => {
     throw new Error("Something went wrong");
   }
 };
+
+//cpmpare password
+export const comparePassword = async (password: string, hash: string) => {
+  try {
+    return await bcrypt.compare(password, hash);
+  } catch (error) {
+    console.log(error);
+    throw new Error("something went wrong");
+  }
+};
