@@ -14,6 +14,8 @@ export const register = async (
   try {
     // console.log(req.body);
     const { full_name, email, password, user_name } = req.body;
+    const file = req.file;
+    console.log(file);
 
     //we can do similar validation using zod in validator folder and use it as middleware
     // to  validate the request body before reaching this controller function
@@ -33,6 +35,10 @@ export const register = async (
     const user = new User({ full_name, email, user_name });
     const hash = await hashPassword(password);
     user.password = hash;
+    //upload profile-picture
+    if (file) {
+      user.profile_image = file.path;
+    }
 
     await user.save();
     const { password: _, ...rest } = user.toObject();
