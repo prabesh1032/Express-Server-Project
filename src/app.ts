@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import errorHandler from "./middleware/errorhandlermiddleware";
 import authRouter from "./routes/auth.routes";
+import brandRouter from "./routes/brand.routes";
 
 const app = express();
 
@@ -20,12 +21,12 @@ app.get("/", (req: Request, res: Response) => {
 //using routes
 
 app.use("/api/v1/auth", authRouter);
-
+app.use("/api/v1/brands", brandRouter);
 
 //using path not found route
 app.use((req: Request, res: Response) => {
   const message = `cannot ${req.method} on ${req.path}`;
-  const error:any = new Error(message);
+  const error: any = new Error(message);
   error.statusCode = 404;
   error.status = "fail";
   throw error;
