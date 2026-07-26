@@ -1,0 +1,10 @@
+import "dotenv/config";
+
+export const ENV_CONFIG = {
+    NODE_ENV: process.env.NODE_ENV,
+    PORT: process.env.PORT!!,
+    DB_URL: process.env.DB_URL!!,
+    Cloudinary_Cloud_Name: process.env.Cloudinary_Cloud_Name!!,
+    Cloudinary_API_Key: process.env.Cloudinary_API_Key!!,
+    Cloudinary_API_Secret: process.env.Cloudinary_API_Secret!!,
+};
