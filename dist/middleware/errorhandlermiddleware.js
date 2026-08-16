@@ -1,16 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const errorhaldler = (error, req, res, next) => {
-    const statusCode = error?.ststusCode ?? 500;
+const errorHandler = (error, req, res, next) => {
+    let statusCode = error?.statusCode ?? 500;
     const message = error?.message ?? "Internal Server Error";
-    const status = error?.ststus ?? "error";
+    const status = error?.status ?? "error";
     const success = false;
+    console.log(error);
+    if (error.code === 11000) {
+        statusCode = 409;
+    }
     res.status(statusCode).json({
         message,
         status,
         success,
         data: null,
         stack: error?.stack ?? null,
+        errors: error?.errors ?? null,
     });
 };
-exports.default = errorhaldler;
+exports.default = errorHandler;

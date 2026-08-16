@@ -34,17 +34,11 @@ export const multerUploder = () => {
   ) => {
     // check file extension
     if (
-      !allowedextensions.includes(path.extname(file.originalname).toLowerCase())
+      !allowedextensions.includes(path.extname(file.originalname).toLowerCase()) ||
+      !allowedFileTypes.includes(file.mimetype)
     ) {
-      cb(new AppError("File type not allowed", 400));
-    } else {
-      cb(null, true);
-    }
-    // check file type
-    if (!allowedFileTypes.includes(file.mimetype)) {
       return cb(new AppError("File type not allowed", 400));
     }
-
     cb(null, true);
   };
   //check file mime type

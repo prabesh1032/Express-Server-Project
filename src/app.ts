@@ -1,12 +1,20 @@
 import express, { Request, Response } from "express";
+import cors from "cors";
 import errorHandler from "./middleware/errorhandlermiddleware";
 import authRouter from "./routes/auth.routes";
 import brandRouter from "./routes/brand.routes";
+import { ENV_CONFIG } from "./config/env.config";
 
 const app = express();
 
 //middleware
 app.use(express.json());
+app.use(
+  cors({
+    origin: ENV_CONFIG.CLIENT_URL,
+    credentials: true,
+  }),
+);
 
 //health check routes
 app.get("/", (req: Request, res: Response) => {

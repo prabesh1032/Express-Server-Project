@@ -3,6 +3,7 @@ import mongoose, { Document } from "mongoose";
 enum Role {
   USER = "USER",
   ADMIN = "ADMIN",
+  SUPER_ADMIN = "SUPER_ADMIN",
 }
 
 //user interface
@@ -44,7 +45,7 @@ const UserSchema = new mongoose.Schema<IUser>(
     role: {
       type: String,
       enum: Object.values(Role),
-      defualt: Role.USER,
+      default: Role.USER,
     },
     profile_image: {
       type: String,
