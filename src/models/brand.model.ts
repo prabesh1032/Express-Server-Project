@@ -18,6 +18,10 @@ const brandSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    logo_public_id: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true },
 );

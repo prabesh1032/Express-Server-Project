@@ -8,6 +8,7 @@ var Role;
 (function (Role) {
     Role["USER"] = "USER";
     Role["ADMIN"] = "ADMIN";
+    Role["SUPER_ADMIN"] = "SUPER_ADMIN";
 })(Role || (Role = {}));
 //scehema
 const UserSchema = new mongoose_1.default.Schema({
@@ -37,7 +38,7 @@ const UserSchema = new mongoose_1.default.Schema({
     role: {
         type: String,
         enum: Object.values(Role),
-        defualt: Role.USER,
+        default: Role.USER,
     },
     profile_image: {
         type: String,

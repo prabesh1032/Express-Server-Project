@@ -21,6 +21,10 @@ const brandSchema = new mongoose_1.default.Schema({
         type: String,
         required: false,
     },
+    logo_public_id: {
+        type: String,
+        required: false,
+    },
 }, { timestamps: true });
 //* model
 const Brand = mongoose_1.default.model("brand", brandSchema);

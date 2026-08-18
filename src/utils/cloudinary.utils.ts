@@ -1,5 +1,6 @@
 import cloudinary from "../config/cloudinary.config";
 import fs from "fs";
+import path from "path";
 import AppError from "./apperror.utils";
 
 export const uploadFileToCloudinary = async (
@@ -9,7 +10,7 @@ export const uploadFileToCloudinary = async (
     const uploadFolder = "mern_project";
 
     const { secure_url, public_id } = await cloudinary.uploader.upload(
-      file.path,
+      path.resolve(file.path),
       {
         folder: uploadFolder,
         unique_filename: true,
@@ -25,8 +26,11 @@ export const uploadFileToCloudinary = async (
       url: secure_url,
       public_id,
     };
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(
+      "Cloudinary upload failed:",
+      error?.error?.message ?? error?.message ?? error,
+    );
 
     // Delete local file if it exists
     if (file && fs.existsSync(file.path)) {
@@ -34,5 +38,15 @@ export const uploadFileToCloudinary = async (
     }
 
     throw new AppError("Failed to upload file to Cloudinary", 500);
+  }
+};
+
+export const deleteFileFromCloudinary = async (publicId?: string | null) => {
+  if (!publicId) return;
+
+  try {
+    await cloudinary.uploader.destroy(publicId);
+  } catch (error) {
+    console.error("Failed to delete Cloudinary file", error);
   }
 };
