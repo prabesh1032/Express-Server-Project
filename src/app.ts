@@ -3,6 +3,8 @@ import cors from "cors";
 import errorHandler from "./middleware/errorhandlermiddleware";
 import authRouter from "./routes/auth.routes";
 import brandRouter from "./routes/brand.routes";
+import categoryRouter from "./routes/category.routes";
+import productRouter from "./routes/product.routes";
 import { ENV_CONFIG } from "./config/env.config";
 
 const app = express();
@@ -30,6 +32,8 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/brands", brandRouter);
+app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/products", productRouter);
 
 //using path not found route
 app.use((req: Request, res: Response) => {

@@ -9,7 +9,7 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const apperror_utils_1 = __importDefault(require("../utils/apperror.utils"));
 const multerUploder = () => {
-    const folder = "uploads"; // folder name where you want to store your files
+    const folder = path_1.default.resolve(__dirname, "../../uploads"); // keep uploads independent of server start directory
     const fileSize = 1024 * 1024 * 5; // 5MB file size limit
     const allowedextensions = [".jpg", ".jpeg", ".png", ".gif"]; // allowed file extensions
     const allowedFileTypes = [

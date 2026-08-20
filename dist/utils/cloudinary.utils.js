@@ -30,7 +30,7 @@ const uploadFileToCloudinary = async (file) => {
         if (file && fs_1.default.existsSync(file.path)) {
             fs_1.default.unlinkSync(file.path);
         }
-        throw new apperror_utils_1.default("Failed to upload file to Cloudinary", 500);
+        throw new apperror_utils_1.default(error?.error?.message ?? error?.message ?? "Failed to upload file to Cloudinary", 500);
     }
 };
 exports.uploadFileToCloudinary = uploadFileToCloudinary;

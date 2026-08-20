@@ -37,7 +37,10 @@ export const uploadFileToCloudinary = async (
       fs.unlinkSync(file.path);
     }
 
-    throw new AppError("Failed to upload file to Cloudinary", 500);
+    throw new AppError(
+      error?.error?.message ?? error?.message ?? "Failed to upload file to Cloudinary",
+      500,
+    );
   }
 };
 
